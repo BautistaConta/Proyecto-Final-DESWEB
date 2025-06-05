@@ -21,10 +21,10 @@ app.set("view engine", "ejs");
 
 // Rutas
 const authRoutes = require("./routes/auth");
-//const taskRoutes = require("./routes/tasks");
+const taskRoutes = require("./routes/tasks");
 
 app.use("/", authRoutes);
-//app.use("/tasks", taskRoutes);
+app.use("/tasks", taskRoutes);
 
 // Servidor
 app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));

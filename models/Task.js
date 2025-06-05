@@ -23,6 +23,17 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   }],
+  comments: [{
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  text: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+}],
   tags: [String],
 }, {
   timestamps: true,
