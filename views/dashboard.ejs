@@ -1,53 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Tus Tareas</title>
-</head>
-<body>
-  <h1>Hola <%= username %> 👋</h1>
-  <h2>Crear nueva tarea</h2>
-  <form action="/tasks/crear" method="POST">
-    <input type="text" name="title" placeholder="Título" required />
-    <input type="text" name="description" placeholder="Descripción" />
-    <button type="submit">Crear</button>
-  </form>
 
-  <h2>Tus tareas</h2>
-  <ul>
-    <% tareas.forEach(t => { %>
-      <li>
-        <strong><%= t.title %></strong> - <%= t.description %> 
-        [<%= t.completed ? "✅" : "❌" %>]
-        <form action="/tasks/eliminar/<%= t._id %>" method="POST" style="display:inline;">
-          <button type="submit">Eliminar</button>
-        </form>
-        <a href="/tasks/editar/<%= t._id %>">Editar</a>
-        <form action="/tasks/compartir/<%= t._id %>" method="POST" style="display:inline;">
-          <input type="email" name="email" placeholder="Email del usuario" required />
-           <button type="submit">Compartir</button>
-           </form>
-      </li>
-      <ul>
-  <% t.comments.forEach(c => { %>
-    <li><strong><%= c.author.username || "Anónimo" %>:</strong> <%= c.text %></li>
+  <h1>Hola <%= username %> 👋</h1>
+
+<h2>Crear nueva tarea</h2>
+<form action="/tasks/crear" method="POST" class="mb-4">
+  <input type="text" name="title" placeholder="Título" required class="form-control mb-2" />
+  <input type="text" name="description" placeholder="Descripción" class="form-control mb-2" />
+  <button type="submit" class="btn btn-primary">Crear</button>
+</form>
+
+<h2>Tus tareas</h2>
+<ul class="list-group mb-4">
+  <% tareas.forEach(t => { %>
+    <li class="list-group-item">
+      <strong><%= t.title %></strong> - <%= t.description %> 
+      [<%= t.completed ? "✅" : "❌" %>]
+      <form action="/tasks/eliminar/<%= t._id %>" method="POST" style="display:inline-block;">
+        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+      </form>
+      <a href="/tasks/editar/<%= t._id %>" class="btn btn-sm btn-secondary">Editar</a>
+      <form action="/tasks/compartir/<%= t._id %>" method="POST" style="display:inline-block;">
+        <input type="email" name="email" placeholder="Email del usuario" required class="form-control d-inline-block w-auto" />
+        <button type="submit" class="btn btn-sm btn-success">Compartir</button>
+      </form>
+      <ul class="mt-2">
+        <% t.comments.forEach(c => { %>
+          <li><strong><%= c.author.username || "Anónimo" %>:</strong> <%= c.text %></li>
+        <% }) %>
+      </ul>
+      <form action="/tasks/comentar/<%= t._id %>" method="POST" class="mt-2">
+        <input type="text" name="text" placeholder="Comentario" required class="form-control d-inline-block w-auto" />
+        <button type="submit" class="btn btn-sm btn-primary">Comentar</button>
+      </form>
+      <p class="mt-2">Etiquetas: <%= t.tags.join(", ") %></p>
+      <form action="/tasks/etiquetar/<%= t._id %>" method="POST" class="mb-3">
+        <input type="text" name="tag" placeholder="Agregar etiqueta" required class="form-control d-inline-block w-auto" />
+        <button type="submit" class="btn btn-sm btn-info">Agregar</button>
+      </form>
+    </li>
   <% }) %>
 </ul>
 
-<!-- Agregar comentario -->
-<form action="/tasks/comentar/<%= t._id %>" method="POST">
-  <input type="text" name="text" placeholder="Comentario" required />
-  <button type="submit">Comentar</button>
-</form>
-
-<!-- Etiquetas -->
-<p>Etiquetas: <%= t.tags.join(", ") %></p>
-<form action="/tasks/etiquetar/<%= t._id %>" method="POST">
-  <input type="text" name="tag" placeholder="Agregar etiqueta" required />
-  <button type="submit">Agregar</button>
-</form>
-    <% }) %>
-  </ul>
-
-  <a href="/logout">Cerrar sesión</a>
-</body>
-</html>
+<a href="/logout" class="btn btn-outline-secondary">Cerrar sesión</a>

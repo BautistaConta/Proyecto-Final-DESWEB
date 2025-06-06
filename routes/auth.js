@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 
+router.get("/", (req, res) => {
+  res.redirect("/login"); // O también podés usar: res.render("home");
+});
+
 router.get("/register", authController.mostrarRegistro);
 router.post("/register", authController.registrarUsuario);
 

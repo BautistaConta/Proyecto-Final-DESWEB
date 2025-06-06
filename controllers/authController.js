@@ -2,12 +2,12 @@ const User = require("../models/User");
 
 // Mostrar vista de registro
 exports.mostrarRegistro = (req, res) => {
-  res.render("register");
+  res.render("register", { title: "Registro" });
 };
 
 // Mostrar vista de login
 exports.mostrarLogin = (req, res) => {
-  res.render("login");
+  res.render("login", { title: "Iniciar Sesión" });
 };
 
 // Registrar usuario

@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Editar Tarea</title>
-</head>
-<body>
-  <h1>Editar tarea</h1>
-  <form action="/tasks/editar/<%= tarea._id %>" method="POST">
-    <input type="text" name="title" value="<%= tarea.title %>" required />
-    <input type="text" name="description" value="<%= tarea.description %>" />
-    <label>
-      <input type="checkbox" name="completed" <%= tarea.completed ? "checked" : "" %> />
-      Completada
-    </label>
-    <button type="submit">Guardar</button>
-  </form>
-  <a href="/tasks">Volver</a>
-</body>
-</html>
+<h1>Editar tarea</h1>
+
+<form action="/tasks/editar/<%= tarea._id %>" method="POST" class="mb-3">
+  <div class="mb-3">
+    <label for="title" class="form-label">Título</label>
+    <input type="text" id="title" name="title" value="<%= tarea.title %>" required class="form-control" />
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Descripción</label>
+    <input type="text" id="description" name="description" value="<%= tarea.description %>" class="form-control" />
+  </div>
+
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="completed" name="completed" <%= tarea.completed ? "checked" : "" %> />
+    <label class="form-check-label" for="completed">Completada</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+<a href="/tasks" class="btn btn-secondary">Volver</a>
