@@ -1,4 +1,4 @@
-// src/components/TaskForm.tsx
+
 import { useState } from "react";
 import { fetchWithToken } from "@/utils/api";
 
@@ -27,9 +27,7 @@ export default function TaskForm({ onCreated }: { onCreated: () => void }) {
         className="input flex-1"
         required
       />
-      <button type="submit" className="btn-primary">
-        Crear
-      </button>
+      <button type="submit" className="btn-primary">Crear</button>
     </form>
   );
 }

@@ -1,4 +1,4 @@
-// src/components/Navbar.tsx
+
 import { useRouter } from "next/router";
 
 export default function Navbar() {

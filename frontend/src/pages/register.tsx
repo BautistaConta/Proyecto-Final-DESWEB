@@ -1,4 +1,4 @@
-// src/pages/register.tsx
+
 import { useState } from "react";
 import { useRouter } from "next/router";
 

@@ -1,4 +1,4 @@
-// src/pages/dashboard.tsx
+
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
