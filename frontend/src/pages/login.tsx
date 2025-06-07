@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -29,13 +28,42 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow w-80">
-        <h2 className="text-2xl font-bold mb-4">Iniciar Sesión</h2>
-        <input type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} className="input" required />
-        <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} className="input" required />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button type="submit" className="btn-primary w-full mt-4">Entrar</button>
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <form
+        onSubmit={handleLogin}
+        className="bg-gray-50 p-8 rounded-2xl shadow-md w-full max-w-sm border"
+      >
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Iniciar Sesión
+        </h2>
+
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="input w-full mb-4"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="input w-full mb-2"
+          required
+        />
+
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-2">{error}</p>
+        )}
+
+        <button
+          type="submit"
+          className="btn-primary w-full py-3 text-lg rounded-xl mt-4"
+        >
+          Entrar
+        </button>
       </form>
     </div>
   );

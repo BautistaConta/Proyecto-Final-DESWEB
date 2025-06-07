@@ -23,18 +23,30 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="max-w-2xl mx-auto mt-6 p-4">
-        <div className="mb-4 flex gap-2">
+      <main className="max-w-3xl mx-auto mt-10 px-6">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">
+          {showShared ? "Tareas compartidas contigo" : "Mis Tareas"}
+        </h2>
+
+        <div className="mb-8 flex gap-4">
           <button
-            className={`btn-primary ${!showShared ? "bg-blue-600" : "bg-blue-400"}`}
+            className={`rounded-xl px-6 py-3 text-lg font-semibold transition-all ${
+              !showShared
+                ? "bg-orange-500 text-white shadow"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
             onClick={() => setShowShared(false)}
           >
             Mis tareas
           </button>
           <button
-            className={`btn-primary ${showShared ? "bg-blue-600" : "bg-blue-400"}`}
+            className={`rounded-xl px-6 py-3 text-lg font-semibold transition-all ${
+              showShared
+                ? "bg-orange-500 text-white shadow"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
             onClick={() => {
               setShowShared(true);
               loadSharedTasks();
@@ -50,15 +62,17 @@ export default function Dashboard() {
             <TaskList />
           </>
         ) : (
-          <div>
-            {sharedTasks.length === 0 && <p>No hay tareas compartidas contigo.</p>}
-            {sharedTasks.map((task) => (
-              <div key={task._id} className="bg-white p-4 rounded shadow mb-4">
-                <h3 className="font-semibold">{task.title}</h3>
-                {/* Podés agregar más info si querés */}
-              </div>
-            ))}
-          </div>
+          <section className="space-y-4">
+            {sharedTasks.length === 0 ? (
+              <p className="text-gray-500 text-center">No hay tareas compartidas contigo.</p>
+            ) : (
+              sharedTasks.map((task) => (
+                <div key={task._id} className="bg-gray-50 p-4 rounded-lg shadow border">
+                  <h3 className="text-lg font-semibold text-gray-800">{task.title}</h3>
+                </div>
+              ))
+            )}
+          </section>
         )}
       </main>
     </div>
