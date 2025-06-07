@@ -41,7 +41,7 @@ export default function TaskItem({ task, onDelete, onUpdate }: {
 
   const handleShare = async () => {
     if (!shareEmail.trim()) return;
-    const res = await fetchWithToken(`/tasks/${task._id}/share`, {
+    const res = await fetchWithToken(`/tasks/compartir/${task._id}`, {
       method: "POST",
       body: JSON.stringify({ email: shareEmail }),
     });
