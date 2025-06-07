@@ -1,16 +1,31 @@
-
+import { useEffect, useState } from "react";
 import { fetchWithToken } from "@/utils/api";
+import TaskItem from "./TaskItem";
 
-export default function TaskItem({ task, onDelete }: { task: any, onDelete: () => void }) {
-  const handleDelete = async () => {
-    await fetchWithToken(`/tasks/${task._id}`, { method: "DELETE" });
-    onDelete();
+export default function TaskList() {
+  const [tasks, setTasks] = useState<any[]>([]);
+
+  const loadTasks = async () => {
+    const res = await fetchWithToken("/tasks");
+    if (!res.ok) return; // manejar error
+    const data = await res.json();
+    setTasks(data);
   };
 
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
   return (
-    <div className="bg-white p-4 rounded shadow mb-2 flex justify-between items-center">
-      <span>{task.title}</span>
-      <button onClick={handleDelete} className="text-red-500 text-sm">Eliminar</button>
+    <div>
+      {tasks.map((task) => (
+        <TaskItem
+          key={task._id}
+          task={task}
+          onDelete={loadTasks}
+          onUpdate={loadTasks}
+        />
+      ))}
     </div>
   );
 }
