@@ -41,7 +41,7 @@ export default function Dashboard() {
           >
             Mis tareas
           </button>
-          <button
+          {/* <button
             className={`rounded-xl px-6 py-3 text-lg font-semibold transition-all ${
               showShared
                 ? "bg-orange-500 text-white shadow"
@@ -53,7 +53,7 @@ export default function Dashboard() {
             }}
           >
             Compartidas conmigo
-          </button>
+          </button> */}
         </div>
 
         {!showShared ? (

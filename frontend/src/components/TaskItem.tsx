@@ -17,7 +17,7 @@ export default function TaskItem({ task, onDelete, onUpdate }: {
 
   const handleAddComment = async () => {
     if (!commentText.trim()) return;
-    const res = await fetchWithToken(`/tasks/comentar/${task._id}`, {
+    const res = await fetchWithToken(`/tasks/${task._id}/comments`, {
       method: "POST",
       body: JSON.stringify({ text: commentText }),
     });
@@ -29,7 +29,7 @@ export default function TaskItem({ task, onDelete, onUpdate }: {
 
   const handleAddTag = async () => {
     if (!newTag.trim()) return;
-    const res = await fetchWithToken(`/tasks/etiquetar/${task._id}`, {
+    const res = await fetchWithToken(`/tasks/${task._id}/tags`, {
       method: "POST",
       body: JSON.stringify({ tag: newTag }),
     });
