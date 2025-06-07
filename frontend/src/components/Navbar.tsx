@@ -9,7 +9,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md px-8 py-4 flex justify-between items-center">
+    <nav className="bg-gray shadow-md px-8 py-4 flex justify-between items-center">
       <h1 className="text-3xl font-bold text-orange-500">Gestor de Tareas</h1>
       <button
         onClick={handleLogout}
