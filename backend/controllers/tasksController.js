@@ -109,3 +109,60 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
+exports.compartirTarea = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const usuario = await User.findOne({ email });
+    if (!usuario) return res.status(404).send("Usuario no encontrado");
+
+    const tarea = await Task.findById(req.params.id);
+    if (!tarea || tarea.owner.toString() !== req.session.userId) {
+      return res.status(403).send("No autorizado");
+    }
+
+    if (!tarea.sharedWith.includes(usuario._id)) {
+      tarea.sharedWith.push(usuario._id);
+      await tarea.save();
+    }
+
+    res.redirect("/tasks");
+  } catch (err) {
+    res.status(500).send("Error al compartir tarea");
+  }
+};
+
+//Comentar
+exports.comentarTarea = async (req, res) => {
+  try {
+    const tarea = await Task.findById(req.params.id);
+    if (!tarea) return res.status(404).send("Tarea no encontrada");
+
+    tarea.comments.push({
+      author: req.session.userId,
+      text: req.body.text,
+    });
+
+    await tarea.save();
+    res.redirect("/tasks");
+  } catch (err) {
+    res.status(500).send("Error al comentar");
+  }
+};
+
+//Etiqueta
+exports.agregarEtiqueta = async (req, res) => {
+  try {
+    const tarea = await Task.findById(req.params.id);
+    if (!tarea) return res.status(404).send("Tarea no encontrada");
+
+    const nuevaEtiqueta = req.body.tag;
+    if (!tarea.tags.includes(nuevaEtiqueta)) {
+      tarea.tags.push(nuevaEtiqueta);
+      await tarea.save();
+    }
+
+    res.redirect("/tasks");
+  } catch (err) {
+    res.status(500).send("Error al agregar etiqueta");
+  }
+};
