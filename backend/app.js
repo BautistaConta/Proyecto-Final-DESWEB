@@ -8,11 +8,8 @@ const tasksRoutes = require('./routes/tasks');
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
-
-// Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // URL de tu frontend Next.js
+  origin: 'http://localhost:3000', // El puerto donde corre Next.js
   credentials: true,
 }));
 app.use(express.json());
@@ -21,14 +18,19 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', tasksRoutes);
 
-// Conexión a MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('MongoDB conectado');
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en puerto ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('Error al conectar a MongoDB:', err);
+const PORT = process.env.PORT || 3001;
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Conectado a MongoDB Atlas');
+  app.listen(PORT, () => {
+    console.log(`Servidor backend escuchando en puerto ${PORT}`);
   });
+})
+.catch((err) => {
+  console.error('Error conectando a MongoDB:', err);
+});
