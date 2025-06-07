@@ -11,8 +11,8 @@ router.get('/:id', tasksController.getTaskById);
 router.put('/:id', tasksController.updateTask);
 router.delete('/:id', tasksController.deleteTask);
 router.post("/compartir/:id", tasksController.compartirTarea);
-router.post("/comentar/:id", tasksController.comentarTarea);
-router.post("/etiquetar/:id", tasksController.agregarEtiqueta);
+router.post('/:id/comments', tasksController.comentarTarea);
+router.post("/:id/tags", tasksController.agregarEtiqueta);
 
 
 // Aquí agregarías POST /, GET /:id, PUT /:id, DELETE /:id, comentarios, etiquetas, compartir...

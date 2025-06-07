@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  content: String,
+  text: String,
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -15,7 +15,7 @@ const taskSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
   comments: [commentSchema],
-  tags: [tagSchema],
+  tags: [String],
   sharedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   createdAt: { type: Date, default: Date.now },
 });
