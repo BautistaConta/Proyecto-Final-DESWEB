@@ -10,9 +10,9 @@ router.post('/', tasksController.createTask);
 router.get('/:id', tasksController.getTaskById);
 router.put('/:id', tasksController.updateTask);
 router.delete('/:id', tasksController.deleteTask);
-router.post("/compartir/:id", protegido, taskController.compartirTarea);
-router.post("/comentar/:id", protegido, taskController.comentarTarea);
-router.post("/etiquetar/:id", protegido, taskController.agregarEtiqueta);
+router.post("/compartir/:id", tasksController.compartirTarea);
+router.post("/comentar/:id", tasksController.comentarTarea);
+router.post("/etiquetar/:id", tasksController.agregarEtiqueta);
 
 
 // Aquí agregarías POST /, GET /:id, PUT /:id, DELETE /:id, comentarios, etiquetas, compartir...

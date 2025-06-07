@@ -1,4 +1,5 @@
 const Task = require('../models/Task');
+const User = require('../models/User');
 
 exports.getTasks = async (req, res) => {
   try {
@@ -111,13 +112,18 @@ exports.deleteTask = async (req, res) => {
 
 exports.compartirTarea = async (req, res) => {
   const { email } = req.body;
+  const taskId = req.params.id;
+  const userId = req.user.userId;
+
   try {
     const usuario = await User.findOne({ email });
-    if (!usuario) return res.status(404).send("Usuario no encontrado");
+    if (!usuario) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    const tarea = await Task.findById(req.params.id);
-    if (!tarea || tarea.owner.toString() !== req.session.userId) {
-      return res.status(403).send("No autorizado");
+    const tarea = await Task.findById(taskId);
+    if (!tarea) return res.status(404).json({ message: "Tarea no encontrada" });
+
+    if (tarea.user.toString() !== userId) {
+      return res.status(403).json({ message: "No autorizado para compartir esta tarea" });
     }
 
     if (!tarea.sharedWith.includes(usuario._id)) {
@@ -125,44 +131,47 @@ exports.compartirTarea = async (req, res) => {
       await tarea.save();
     }
 
-    res.redirect("/tasks");
+    res.json({ message: "Tarea compartida correctamente" });
   } catch (err) {
-    res.status(500).send("Error al compartir tarea");
+    res.status(500).json({ message: "Error al compartir tarea", error: err.message });
   }
 };
 
 //Comentar
 exports.comentarTarea = async (req, res) => {
-  try {
-    const tarea = await Task.findById(req.params.id);
-    if (!tarea) return res.status(404).send("Tarea no encontrada");
+  const taskId = req.params.id;
+  const userId = req.user.userId;
+  const { text } = req.body;
 
-    tarea.comments.push({
-      author: req.session.userId,
-      text: req.body.text,
-    });
+  try {
+    const tarea = await Task.findById(taskId);
+    if (!tarea) return res.status(404).json({ message: "Tarea no encontrada" });
+
+    tarea.comments.push({ user: userId, text });
 
     await tarea.save();
-    res.redirect("/tasks");
+    res.status(201).json({ message: "Comentario agregado" });
   } catch (err) {
-    res.status(500).send("Error al comentar");
+    res.status(500).json({ message: "Error al comentar", error: err.message });
   }
 };
 
 //Etiqueta
 exports.agregarEtiqueta = async (req, res) => {
-  try {
-    const tarea = await Task.findById(req.params.id);
-    if (!tarea) return res.status(404).send("Tarea no encontrada");
+  const taskId = req.params.id;
+  const { tag } = req.body;
 
-    const nuevaEtiqueta = req.body.tag;
-    if (!tarea.tags.includes(nuevaEtiqueta)) {
-      tarea.tags.push(nuevaEtiqueta);
+  try {
+    const tarea = await Task.findById(taskId);
+    if (!tarea) return res.status(404).json({ message: "Tarea no encontrada" });
+
+    if (!tarea.tags.includes(tag)) {
+      tarea.tags.push(tag);
       await tarea.save();
     }
 
-    res.redirect("/tasks");
+    res.status(200).json({ message: "Etiqueta agregada correctamente" });
   } catch (err) {
-    res.status(500).send("Error al agregar etiqueta");
+    res.status(500).json({ message: "Error al agregar etiqueta", error: err.message });
   }
 };
