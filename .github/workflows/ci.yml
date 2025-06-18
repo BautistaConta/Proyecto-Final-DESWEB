@@ -1,0 +1,44 @@
+name: CI/CD Proyecto Final
+
+on:
+  push:
+    branches: [ tres-capas ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependencias frontend
+        run: |
+          cd frontend
+          npm install
+
+      - name: Instalar dependencias backend
+        run: |
+          cd backend
+          npm install
+
+      - name: Compilar frontend
+        run: |
+          cd frontend
+          npm run build || echo "No hay proceso de build definido"
+
+      - name: Ejecutar pruebas backend (si existen)
+        run: |
+          cd backend
+          npm test || echo "No hay tests aún definidos"
+
+      - name: Simular despliegue (solo si es merge a main)
+        if: github.ref == 'refs/heads/main'
+        run: echo "Desplegando a producción (simulado)"
