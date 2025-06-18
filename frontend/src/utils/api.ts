@@ -11,3 +11,4 @@ export async function fetchWithToken(endpoint: string, options: RequestInit = {}
 
   return fetch(`${API_URL}${endpoint}`, { ...options, headers });
 }
+ 
