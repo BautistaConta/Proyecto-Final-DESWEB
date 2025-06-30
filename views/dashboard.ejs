@@ -24,7 +24,7 @@
       </form>
       <ul class="mt-2">
         <% t.comments.forEach(c => { %>
-          <li><strong><%= c.author.username || "Anónimo" %>:</strong> <%= c.text %></li>
+          <li><strong><%= (c.author && c.author.username) || "Anónimo" %>:</strong> <%= c.text %></li>
         <% }) %>
       </ul>
       <form action="/tasks/comentar/<%= t._id %>" method="POST" class="mt-2">
